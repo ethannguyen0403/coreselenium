@@ -17,6 +17,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -63,46 +64,6 @@ public class Helper {
      *                     lst.add(new BaseNameValuePair("captcha", "1234"))
      * @throws Exception
      */
-//    public static void loginBOIgnoreCaptcha(String sosURL, String urlDashBoard, List<NameValuePair> params, boolean isRaise) throws Exception {
-//        String java_home = System.getenv("JAVA_HOME");
-//        if (java_home.contains("Java")) {
-//            String certificatesTrustStorePath = String.format("%s\\jre\\lib\\security\\cacerts", java_home);
-//            System.setProperty("javax.net.ssl.trustStore", certificatesTrustStorePath);
-//            System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
-//        } else {
-//            throw new Exception("Error: JAVA_HOME isn't set");
-//        }
-//
-//        try {
-//            // 1. getting web-driver cookie
-//            Set<Cookie> browserCookies = DriverManager.getDriver().getCookies();
-//            Helper h = new Helper();
-//            boolean isSecure = sosURL.contains("https://");
-//            // 2. transferring browser's cookies to session
-//            CookieStore cookieStore = h.getBrowserCookies(browserCookies, isSecure);
-//
-//            HttpResponse responsePost = h.sendPostRequest(sosURL, params, cookieStore, isRaise);
-//            List<Cookie> lstPOSTCookies = h.getCookies(responsePost);
-//
-//            // 3. passing POST's cookies to browser's cookies
-//            if (isRaise && lstPOSTCookies.size() < 2) {
-//                throw new Exception(String.format("Error: Can't get SLID and u cookies when using '%s' and '%s'", params.get(0), params.get(1)));
-//            }
-//            for (Cookie c : lstPOSTCookies) // SLID, u
-//            {
-//                DriverManager.getDriver().addCookie(c);
-//            }
-//            System.out.println(String.format("Debug: Completing logging in username '%s'", params.get(0)));
-//            DriverManager.getDriver().get(urlDashBoard);
-//
-//        }
-//        catch (Exception ex) {
-//            System.err.println(String.format("ERROR: Exception occurs by '%s'", ex.getMessage()));
-//            DriverManager.quitAll();
-//            throw new Exception(ex.getMessage());
-//        }
-//    }
-
     public static void loginBOIgnoreCaptcha(String sosURL, String urlDashBoard, String username, String password, boolean isRaise) throws Exception {
         String java_home = System.getenv("JAVA_HOME");
         if (java_home.contains("Java")) {
@@ -462,6 +423,51 @@ public class Helper {
         }
     }
 
+    /**
+     * The method use to send PUT request with dynamic Headers
+     * @param url
+     * @param json
+     * @param headers
+     * @return
+     */
+    public HttpResponse sendPutRequest(String url, String json, Map<String,String> headers) {
+        try {
+            HttpClient client =  HttpClientBuilder.create().build();//createClient(cookies);//createClient(cookies);
+            HttpPut put = new HttpPut(url);
+            for(Map.Entry<String, String> _header : headers.entrySet()){
+                put.setHeader(_header.getKey(),_header.getValue());
+            }
+            if (json != null) {
+                StringEntity stringEntity = new StringEntity(json);
+                put.setEntity(stringEntity);
+            }
+           return client.execute(put);
+           /* System.out.println("reponse" +response.getStatusLine().getStatusCode());
+            int codeReponse = response.getStatusLine().getStatusCode();
+            if (codeReponse ==200)
+                return response;
+            if(codeReponse ==302)
+                return response;
+            // if (codeReponse != 200 ||codeReponse !=302){
+            System.err.println("Response Code : " + response.getStatusLine().getStatusCode());
+            System.err.println("ERROR LOG : " + response.getStatusLine().getReasonPhrase());
+            return null;
+            // }
+            //  return response;*/
+        } catch (UnsupportedEncodingException ex) {
+            System.err.println(String.format("Error: UnsupportedEncodingException at sendPostRequest at request '%s' because exception message '%s'", url, ex.getMessage()) );
+            return null;
+        } catch (ClientProtocolException ex) {
+            System.err.println(String.format("Error: ClientProtocolException at sendPostRequest at request '%s' because exception message '%s'", url, ex.getMessage()) );
+            return null;
+        } catch (IOException ex){
+            System.err.println(String.format("Error: IOException at sendPostRequest at request '%s' because error '%s'", url, ex.getMessage()) );
+            return null;
+        } catch (TimeoutException ex){
+            System.err.println(String.format("Error: TimeoutException at sendPostRequest at request '%s' because error '%s'", url, ex.getMessage()) );
+            return null;
+        }
+    }
     public HttpResponse sendPostRequest(String url, String contentType, CookieStore cookies, String accept) {
         try {
             HttpClient client = HttpClientBuilder.create().setDefaultCookieStore(cookies).build();//createClient(cookies);//createClient(cookies);
@@ -501,7 +507,6 @@ public class Helper {
             return null;
         }
     }
-
     /**
      * Using this method to get a new JSESSIONID from PS3838-Agent server to bypass security code.
      * On UI, we usually force to input security code but with using API we have to get this JSESSIONID and then add this JSESSIONID into cookie
@@ -568,6 +573,31 @@ public class Helper {
             }
             if (contentType != null) {
                 post.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
+            }
+            // send post request
+            return client.execute(post);
+        } catch (Exception ex) {
+            System.err.println(String.format("ERROR: Exception occurs at sendPostRequestWithCookies page bypass '%s' security code by '%s'", url, ex.getMessage()));
+            return null;
+        }
+    }
+    /**
+     * Using this method to sent a POST method has to add dynamic headers
+     * @param url
+     * @param json
+     * @return
+     * @throws IOException
+     */
+    public HttpResponse sendPostRequestWithCookiesHasDynamicHeaders(String url, String json, Map<String,String> headers) {
+        try{
+            HttpClient client = HttpClientBuilder.create().build();//createClient();//HttpClientBuilder.create().build();
+            HttpPost post = new HttpPost(url);
+            if (json != null) {
+                StringEntity stringEntity = new StringEntity(json);
+                post.setEntity(stringEntity);
+            }
+            for(Map.Entry<String, String> _header : headers.entrySet()){
+                post.setHeader(_header.getKey(),_header.getValue());
             }
             // send post request
             return client.execute(post);
@@ -814,18 +844,47 @@ public class Helper {
     }
 
     public static void main(String[] args) throws Exception {
-//        DriverProperties driverProperties = new DriverProperties();
-//        driverProperties.setBrowserVersion("CHROME");
-//        driverProperties.setBrowserName(Constants.Browser.CHROME);
-//        driverProperties.setRemoteURL("");
-//        driverProperties.setPlatform(Constants.Platform.WINDOWS);
-//        driverProperties.setPlatformVersion("10");
-//        driverProperties.setExecutablePath("\\documents\\chromedriver.exe");
-//        DriverManager.createWebDriver(driverProperties);
-
-
-//        System.out.println(response.getStatusLine().getStatusCode());
-//        DriverManager.quitAll();
+        String url ="https://aqsqat.beatus88.com/aqs-gateway/v3/orders/prepare/9fbe42d5-4308-46ec-isa805-autogeneral111020221035";
+        String jsn = String.format("{\n" +
+                "    \"orderId\": \"9fbe42d5-4308-46ec-isa805-autogeneral111020221035\",\n" +
+                "    \"hitterId\": \"jo\",\n" +
+                "    \"orderMappings\": [\n" +
+                "        {\n" +
+                "            \"book\": \"IBCBET\",\n" +
+                "            \"tournament\": \"Argentina Torneo Federal A\",\n" +
+                "            \"homeTeam\": \"Sarmiento Resistencia\",\n" +
+                "            \"awayTeam\": \"Juventud Antoniana\",\n" +
+                "            \"scheduledKickOffTimeUtc\": \"2022-09-09T18:45:00Z\",\n" +
+                "            \"liveHomeScore\": 0,\n" +
+                "            \"liveAwayScore\": 0\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"book\": \"SINGBET\",\n" +
+                "            \"tournament\": \"Argentina Torneo Federal A\",\n" +
+                "            \"homeTeam\": \"Sarmiento Resistencia\",\n" +
+                "            \"awayTeam\": \"Juventud Antoniana\",\n" +
+                "            \"scheduledKickOffTimeUtc\": \"2022-09-09T18:45:00Z\",\n" +
+                "            \"liveHomeScore\": 0,\n" +
+                "            \"liveAwayScore\": 0\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"book\": \"SBOBET\",\n" +
+                "            \"tournament\": \"Argentina Torneo Federal A\",\n" +
+                "            \"homeTeam\": \"Sarmiento Resistencia\",\n" +
+                "            \"awayTeam\": \"Juventud Antoniana\",\n" +
+                "            \"scheduledKickOffTimeUtc\": \"2022-09-09T18:45:00Z\",\n" +
+                "            \"liveHomeScore\": 0,\n" +
+                "            \"liveAwayScore\": 0\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"translation\": {\n" +
+                "        \"language\": \"\",\n" +
+                "        \"tournament\": \"\",\n" +
+                "        \"homeTeam\": \"\",\n" +
+                "        \"awayTeam\": \"\"\n" +
+                "    }\n" +
+                "}");
+      //  sendPutRequest(url,"application/json",null,"",jsn);
     }
 
 
