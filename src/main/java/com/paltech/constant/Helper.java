@@ -606,6 +606,27 @@ public class Helper {
             return null;
         }
     }
+
+    /**
+     * Using this method to sent a POST method has to add dynamic headers
+     * @param url
+     * @return
+     * @throws IOException
+     */
+    public HttpResponse sendGetRequestWithCookiesHasDynamicHeaders(String url, Map<String,String> headers) {
+        try{
+            HttpClient client = HttpClientBuilder.create().build();//createClient();//HttpClientBuilder.create().build();
+            HttpGet get = new HttpGet(url);
+            for(Map.Entry<String, String> _header : headers.entrySet()){
+                get.setHeader(_header.getKey(),_header.getValue());
+            }
+            // send get request
+            return client.execute(get);
+        } catch (Exception ex) {
+            System.err.println(String.format("ERROR: Exception occurs at sendGetRequestWithCookiesHasDynamicHeaders page bypass '%s' security code by '%s'", url, ex.getMessage()));
+            return null;
+        }
+    }
     public HttpResponse sendPostRequestWithCookies(String url, String contentType, String json, String cookies) throws IOException {
        return sendPostRequestWithCookies(url,contentType,json,cookies,null);
     }

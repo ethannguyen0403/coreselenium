@@ -47,6 +47,10 @@ public class WSUtils {
         Helper helper = new Helper();
         return helper.sendPostRequestWithCookiesHasDynamicHeaders(url,jsn, headers);
     }
+    public static HttpResponse sendGETRequestDynamicHeaders(String url,  Map<String,String> headers) throws IOException {
+        Helper helper = new Helper();
+        return helper.sendGetRequestWithCookiesHasDynamicHeaders(url, headers);
+    }
     public static HttpResponse sendPUTRequestDynamicHeaders(String url,  String jsn, Map<String,String> headers) throws IOException {
         Helper helper = new Helper();
         return helper.sendPutRequest(url, jsn, headers);
@@ -107,6 +111,7 @@ public class WSUtils {
             return null;
         }
     }
+
     public static JSONObject getPUTJSONObjectWithDynamicHeaders(String url, String jsn, Map<String, String> headers) {
         try {
             HttpResponse response = WSUtils.sendPUTRequestDynamicHeaders(url,jsn,headers);
@@ -189,6 +194,22 @@ public class WSUtils {
         }
     }
 
+    public static JSONArray getGETJSONArraytWithDynamicHeaders(String url, Map<String, String> headers) {
+        try {
+            HttpResponse response = WSUtils.sendGETRequestDynamicHeaders(url,headers);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuilder strBuilder = new StringBuilder();
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                strBuilder.append(line);
+            }
+            String output = strBuilder.toString();
+            return new JSONArray(output);
+        } catch (IOException ex) {
+            System.out.println("Exception: IOException occurs at sendGETRequestDynamicHeaders");
+            return null;
+        }
+    }
     public static HttpResponse sendDELETERequest(String url) throws IOException {
         Helper helper = new Helper();
         boolean isSecure = url.contains("https://");

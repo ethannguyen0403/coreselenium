@@ -26,7 +26,7 @@ public class DesktopChromeDriver extends Driver {
 		System.out.println(String.format("Picking up ChromeDriver at %s", properties.getExecutablePath()));
 
 		ChromeOptions options = new ChromeOptions();
-		//options = configureChromeOptions();
+		options = configureChromeOptions();
 
 		if (properties.isProxy()){
 			System.out.println(String.format("Setting proxy is %s", properties.isProxy()));
