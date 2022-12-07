@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 /**
  * @author isabella.huynh
@@ -32,7 +33,6 @@ public class WSUtils {
         return helper.sendPostRequest(url, header, jsn, cookieStore, accept);
     }
 
-
     public static HttpResponse sendPOSTRequestWithCookies(String url, String header, String jsn, String cookies,String accept) throws IOException {
         Helper helper = new Helper();
         return helper.sendPostRequestWithCookies(url, header, jsn, cookies, accept);
@@ -41,6 +41,19 @@ public class WSUtils {
     public static HttpResponse sendPOSTRequestWithCookiesHasHeader(String url, String header, String jsn, String cookies,String accept,String headerParm, String headerValue) throws IOException {
         Helper helper = new Helper();
         return helper.sendPostRequestWithCookiesHasHeader(url, header, jsn, cookies, accept,headerParm,headerValue);
+    }
+
+    public static HttpResponse sendPOSTRequestDynamicHeaders(String url,  String jsn, Map<String,String> headers) throws IOException {
+        Helper helper = new Helper();
+        return helper.sendPostRequestWithCookiesHasDynamicHeaders(url,jsn, headers);
+    }
+    public static HttpResponse sendGETRequestDynamicHeaders(String url,  Map<String,String> headers) throws IOException {
+        Helper helper = new Helper();
+        return helper.sendGetRequestWithCookiesHasDynamicHeaders(url, headers);
+    }
+    public static HttpResponse sendPUTRequestDynamicHeaders(String url,  String jsn, Map<String,String> headers) throws IOException {
+        Helper helper = new Helper();
+        return helper.sendPutRequest(url, jsn, headers);
     }
 
     public static int getPOSTResponseCodeWithCookies(String url, String header, String jsn, String cookies,String accept) throws IOException {
@@ -83,6 +96,38 @@ public class WSUtils {
             return null;
         }
     }
+    public static JSONObject getPOSTJSONObjectWithDynamicHeaders(String url, String jsn, Map<String, String> headers) {
+        try {
+            HttpResponse response = WSUtils.sendPOSTRequestDynamicHeaders(url,jsn,headers);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuilder strBuilder = new StringBuilder();
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                strBuilder.append(line);
+            }
+            return new JSONObject(strBuilder.toString());
+        } catch (IOException ex) {
+            System.out.println("Exception: IOException occurs at getGETJSONResponse");
+            return null;
+        }
+    }
+
+    public static JSONObject getPUTJSONObjectWithDynamicHeaders(String url, String jsn, Map<String, String> headers) {
+        try {
+            HttpResponse response = WSUtils.sendPUTRequestDynamicHeaders(url,jsn,headers);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuilder strBuilder = new StringBuilder();
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                strBuilder.append(line);
+            }
+            return new JSONObject(strBuilder.toString());
+        } catch (IOException ex) {
+            System.out.println("Exception: IOException occurs at getGETJSONResponse");
+            return null;
+        }
+    }
+
     public static HttpResponse sendGETRequestWithCookies(String url, String contentType, String cookies) throws IOException {
         Helper helper = new Helper();
         return helper.sendGETRequestWithCookies(url, contentType, cookies,null);
@@ -111,10 +156,10 @@ public class WSUtils {
             return null;
         }
     }
+
     public static JSONObject getGETJSONObjectWithCookies(String url, String contentType, String cookies) {
         return getGETJSONObjectWithCookies(url,contentType,cookies,null);
     }
-
 
     public static JSONObject getGETJSONObjectWithCookies(String url, String contentType, String cookies,String accept) {
         try {
@@ -149,6 +194,22 @@ public class WSUtils {
         }
     }
 
+    public static JSONArray getGETJSONArraytWithDynamicHeaders(String url, Map<String, String> headers) {
+        try {
+            HttpResponse response = WSUtils.sendGETRequestDynamicHeaders(url,headers);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuilder strBuilder = new StringBuilder();
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                strBuilder.append(line);
+            }
+            String output = strBuilder.toString();
+            return new JSONArray(output);
+        } catch (IOException ex) {
+            System.out.println("Exception: IOException occurs at sendGETRequestDynamicHeaders");
+            return null;
+        }
+    }
     public static HttpResponse sendDELETERequest(String url) throws IOException {
         Helper helper = new Helper();
         boolean isSecure = url.contains("https://");
