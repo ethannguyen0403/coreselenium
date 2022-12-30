@@ -13,6 +13,7 @@ public class DriverProperties {
 	private String platformVersion;
 	private String remoteURL;
 	private String executablePath;
+	private String downloadPath;
 	private boolean isProxy = false;
 	private BrowserMobProxy browserMobProxy;
 	private int elementWaitTimeOut = 1;
@@ -69,7 +70,14 @@ public class DriverProperties {
 		File file = new File("");
 		this.executablePath = file.getAbsolutePath() + pathToExecutable;
 	}
+	public String getDownloadPath() {
+		return downloadPath;
+	}
 
+	public void setDownloadPath(String pathToDownload) {
+		File file = new File("");
+		this.downloadPath = file.getAbsolutePath() + pathToDownload;
+	}
 	public int getElementWaitTimeOut() {
 		return elementWaitTimeOut;
 	}
