@@ -16,6 +16,8 @@ import java.net.Inet4Address;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+
 /**
  * @author isabella.huynh
  * created on Nov/9/2019.
@@ -26,11 +28,18 @@ public class DesktopChromeDriver extends Driver {
 		System.out.println(String.format("Picking up ChromeDriver at %s", properties.getExecutablePath()));
 
 		ChromeOptions options = new ChromeOptions();
-		options = configureChromeOptions();
+		//options = configureChromeOptions();
+
+		//For setting download directory
+		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+		chromePrefs.put("profile.default_content_settings.popups", 0);
+		chromePrefs.put("download.prompt_for_download", "false");
+		chromePrefs.put("download.default_directory", properties.getDownloadPath());
 
 		if (properties.isProxy()){
 			System.out.println(String.format("Setting proxy is %s", properties.isProxy()));
 			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
+			// set dowload path
 
 			// creating a mob proxy
 			BrowserMobProxy proxy = getProxyServer();
@@ -40,14 +49,17 @@ public class DesktopChromeDriver extends Driver {
 			options.setCapability(CapabilityType.PROXY, seleniumProxy);
 			options.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
 			options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
+			options.setExperimentalOption("prefs",chromePrefs);
 			setWebDriver(new ChromeDriver(options));
 			proxy.newHar();
 			properties.setBrowserMobProxy(proxy);
 			System.out.println("DEBUG: Proxy Port is " + proxy.getPort());
 		} else if (properties.getRemoteURL() == null || properties.getRemoteURL().equals("")) {
 			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
+			options.setExperimentalOption("prefs",chromePrefs);
 			setWebDriver(new ChromeDriver(options));
 		} else {
+			options.setExperimentalOption("prefs",chromePrefs);
 			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 			capabilities.setVersion(properties.getBrowserVersion());
 			capabilities.setCapability("platform", properties.getPlatform());
@@ -94,4 +106,6 @@ public class DesktopChromeDriver extends Driver {
 		options.addArguments("--window-size=1920,1080");
 		return options;
 	}
+
+
 }
