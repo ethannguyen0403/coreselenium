@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>3.141.59</version>
+			<version>4.11.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.influxdb</groupId>
@@ -160,6 +160,12 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.5</version>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<repositories>
@@ -173,7 +179,7 @@
 		</repository>
 		<repository>
 			<id>pal</id>
-			<url>https://artifact.pal.net.vn/repository/maven-releases/</url>
+			<url>https://nexus.techtank9.com/repository/maven-releases/</url>
 		</repository>
 	</repositories>
 
@@ -181,12 +187,12 @@
 		<repository>
 			<id>pal</id>
 			<name>QAT-TESTCASE-releases</name>
-			<url>https://artifact.pal.net.vn/repository/maven-releases/</url>
+			<url>https://nexus.techtank9.com/repository/maven-releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>pal</id>
 			<name>QAT-TESTCASE-snapshots</name>
-			<url>https://artifact.pal.net.vn/repository/maven-snapshots/</url>
+			<url>https://nexus.techtank9.com/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
