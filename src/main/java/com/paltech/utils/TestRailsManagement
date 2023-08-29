@@ -1,0 +1,73 @@
+package com.paltech.utils;
+import com.paltech.utils.DateUtils;
+import com.paltech.utils.testrailio.APIClient;
+import com.paltech.utils.testrailio.APIException;
+import org.json.simple.JSONObject;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class TestRailsManagement {
+    public static boolean isAddTestRailResult = true;
+    public static String PROJECT_ID = "1";
+    public static String TESTRAIL_USERNAME = "isabella.huynh@pal.net.vn";
+    public static String TESTRAIL_PASSWORD = "P@l332211";
+    public static String RAILS_ENGINE_URL = "https://paltech.testrail.io/";
+    public static final int TEST_CASE_PASSED_STATUS = 1;
+    public static final int TEST_CASE_FAILED_STATUS = 5;
+    public static APIClient client;
+    private static List<Long> lstCases= new ArrayList<>();
+   // public final static String PROJECT_ID="1";
+    public static APIClient authenticate(){
+        client = new APIClient(RAILS_ENGINE_URL);
+        client.setUser(TESTRAIL_USERNAME);
+        client.setPassword(TESTRAIL_PASSWORD);
+        return client;
+    }
+    public static Long addRun(String projectID,String runname) throws APIException, IOException {
+        System.out.println("Add New Test Run in TestRails" );
+        client = authenticate();
+        Map data = new HashMap();
+        data.put("include_all", false);
+        data.put("name", "Test Run of " + runname + " on " + DateUtils.getDateFollowingGMT("GMT+7", "dd-MM-YYYY hh:mm:ss"));
+      //  data.put("name", "Test Run of " + ctx.getName() +" on"+ DateUtils.getDateFollowingGMT("GMT+7","dd-MM-YYYY hh:mm:ss"));
+        // data.put("milestone_id",1);
+        JSONObject c = (JSONObject) client.sendPost("add_run/" + projectID, data);
+        Long suite_id = (Long) c.get("id");
+        return suite_id;
+    }
+
+    public static void addResultForTestCase(String testCaseID, ITestResult result, ITestContext ctx) throws APIException, IOException {
+//        String testRunId = PROJECT_ID;
+//        APIClient client = new APIClient(RAILS_ENGINE_URL);
+//        client.setUser(TESTRAIL_USERNAME);
+//        client.setPassword(TESTRAIL_PASSWORD);
+//        Map data = new HashMap();
+//        data.put("status_id",status);
+//        data.put("comment","Test Executed - Status update automatically form Selenium test automation tool");
+//        client.sendPost("add_result_for_case/"+testRunId+"/"+testCaseID+"",data);
+        System.out.println("*** Add result to TestRails");
+        String caseId = (String) ctx.getAttribute("caseId");
+        Long suiteId = (Long) ctx.getAttribute("suiteId");
+        Map data1 = new HashMap();
+        // add test case for test run
+        lstCases.add(Long.parseLong(caseId));
+        data1.put("case_ids",lstCases);
+        client.sendPost("update_run/" + suiteId, data1);
+        //end add test case for test run
+        //start add result for a test case
+        Map data = new HashMap();
+        if (result.isSuccess()) {
+            data.put("status_id", 1);
+        } else {
+            data.put("status_id", 5);
+            data.put("comment", result.getThrowable().toString());
+        }
+        client.sendPost("add_result_for_case/" + suiteId + "/" + caseId, data);
+    }
+}

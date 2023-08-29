@@ -41,13 +41,13 @@ public class SauceLabsDriver extends Driver {
 		}
 
 		if (properties.getPlatform() == Platform.OSX) {
-			capabilities.setCapability(CapabilityType.PLATFORM, "OS X " + properties.getPlatformVersion());
+			capabilities.setCapability(CapabilityType.PLATFORM_NAME, "OS X " + properties.getPlatformVersion());
 		}
 		else {
-			capabilities.setCapability(CapabilityType.PLATFORM, properties.getPlatform() + " " + properties.getPlatformVersion());
+			capabilities.setCapability(CapabilityType.PLATFORM_NAME, properties.getPlatform() + " " + properties.getPlatformVersion());
 		}
 
-		capabilities.setCapability(CapabilityType.VERSION, properties.getBrowserVersion());
+		capabilities.setCapability(CapabilityType.BROWSER_VERSION, properties.getBrowserVersion());
 		System.out.println("Score method name ===="+ properties.getMethodName());
 		if (properties.getMethodName() != null && !properties.getMethodName().equals("")){
 

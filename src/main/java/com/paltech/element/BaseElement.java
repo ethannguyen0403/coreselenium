@@ -14,6 +14,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class BaseElement {
@@ -63,7 +64,7 @@ public class BaseElement {
 
 	public void click() {
 		try {
-			logStartAction(String.format("click: '%s'", locator));
+//			logStartAction(String.format("click: '%s'", locator));
 			getWebElement().click();
 			logEndAction(String.format("clicked: '%s'", locator));
 		/*} catch (NullPointerException ex) {
@@ -74,7 +75,7 @@ public class BaseElement {
 	}
 
 	public void jsClick(){
-		logStartAction(String.format("click by javascript: '%s'", locator));
+//		logStartAction(String.format("click by javascript: '%s'", locator));
 		try {
 			DriverManager.getDriver().executeJavascript(getWebElement(), "arguments[0].click();");
 			logEndAction(String.format("clicked by javascript: '%s'", locator));
@@ -87,7 +88,7 @@ public class BaseElement {
 	}
 	protected void submit() {
 		try{
-			logStartAction(String.format("submit: '%s'", locator));
+//			logStartAction(String.format("submit: '%s'", locator));
 			getWebElement().submit();
 			logEndAction(String.format("submitted: '%s'", locator));
 		} catch (NullPointerException ex) {
@@ -103,7 +104,7 @@ public class BaseElement {
 	 */
 	public void sendSingleKey(Keys key) {
 		try{
-			logStartAction("send key '%s' to: %s");
+//			logStartAction("send key '%s' to: %s");
 			Actions action = new Actions(DriverManager.getDriver().getWebDriver());
 			action.sendKeys(key).build().perform();
 			logEndAction("sent key '%s' to: %s");
@@ -116,7 +117,7 @@ public class BaseElement {
 
 	protected void sendKeys(CharSequence... keysToSend) {
 		try{
-			logStartAction(String.format("send keys '%s' to: %s", String.valueOf(keysToSend), locator));
+//			logStartAction(String.format("send keys '%s' to: %s", String.valueOf(keysToSend), locator));
 			getWebElement().sendKeys(keysToSend);
 			logEndAction(String.format("sent keys '%s' to: %s", String.valueOf(keysToSend), locator));
 		/*} catch (NullPointerException ex) {
@@ -127,13 +128,13 @@ public class BaseElement {
 	}
 
 	protected void clear() {
-		logStartAction(String.format("clear text: '%s'", locator));
+//		logStartAction(String.format("clear text: '%s'", locator));
 		getWebElement().clear();
 		logEndAction(String.format("cleared text: '%s'", locator));
 	}
 
 	protected void type(CharSequence... keysToSend) {
-		logStartAction(String.format("type '%s' into: %s", String.valueOf(keysToSend), locator));
+//		logStartAction(String.format("type '%s' into: %s", String.valueOf(keysToSend), locator));
 		clear();
 		sendKeys(keysToSend);
 		logEndAction(String.format("typed '%s' into: %s", String.valueOf(keysToSend), locator));
@@ -141,7 +142,7 @@ public class BaseElement {
 
 	protected String getTagName() {
 		try{
-			logStartAction(String.format("get Tag Name: '%s'", locator));
+//			logStartAction(String.format("get Tag Name: '%s'", locator));
 			String tagName = getWebElement().getTagName();
 			logEndAction(String.format("got Tag Name value '%s' is %s", tagName, locator));
 			return tagName;
@@ -160,7 +161,7 @@ public class BaseElement {
 
 	public String getAttribute(String name, boolean isLogged) {
 		try{
-			if(isLogged){logStartAction(String.format("get '%s' attribute: %s", name, locator));}
+//			if(isLogged){logStartAction(String.format("get '%s' attribute: %s", name, locator));}
 			String value = getWebElement(false).getAttribute(name);
 			if(isLogged){logEndAction(String.format("got attribute value '%s' is %s", value, locator));}
 			return value;
@@ -180,7 +181,7 @@ public class BaseElement {
 	 */
 	public String getColour(String name) {
 		try{
-			logStartAction(String.format("get %s color: %s", name, locator));
+//			logStartAction(String.format("get %s color: %s", name, locator));
 			String value = getWebElement().getCssValue(name);
 			logEndAction(String.format("got color '%s' is %s", value, locator));
 			return value;
@@ -201,7 +202,7 @@ public class BaseElement {
 	 * Moving the cursor of the mouse to the location of this control
 	 */
 	public void moveAndHoverOnControl(){
-		logStartAction(String.format("move and hover on this main menu: %s", locator));
+//		logStartAction(String.format("move and hover on this main menu: %s", locator));
 		Actions builder = new Actions(DriverManager.getDriver().getWebDriver());
 		builder.moveToElement(getWebElement()).build().perform();
 		logEndAction(String.format("moved and hovered on this main menu: %s", locator));
@@ -213,7 +214,7 @@ public class BaseElement {
 	 */
 	public boolean isSelected() {
 		try {
-			logStartAction(String.format("check if this control '%s' is selected", locator));
+//			logStartAction(String.format("check if this control '%s' is selected", locator));
 			boolean isSelected = getWebElement().isSelected();
 			logEndAction(String.format("checked if this control '%s' selected is  %s", locator, isSelected));
 			return isSelected;
@@ -233,7 +234,7 @@ public class BaseElement {
 	 */
 	public boolean isEnabled() {
 		try{
-			logStartAction(String.format("get if this control '%s' is enabled status", locator));
+//			logStartAction(String.format("get if this control '%s' is enabled status", locator));
 			boolean isEnabled = getWebElement().isEnabled();
 			logEndAction(String.format("got if this control '%s' is enabled %s", isEnabled, locator));
 			return isEnabled;
@@ -261,7 +262,7 @@ public class BaseElement {
 	 */
 	public boolean isDisplayedShort(int timeOutInSeconds) {
 		try {
-			logStartAction(String.format("check if this control '%s' is displayed after timeoutInSeconds %s", locator, timeOutInSeconds));
+//			logStartAction(String.format("check if this control '%s' is displayed after timeoutInSeconds %s", locator, timeOutInSeconds));
 			boolean isDisplayed = DriverManager.getDriver().isElementVisible(locator, timeOutInSeconds);
 			logEndAction(String.format("checked if this control displayed is %s with xpath '%s'", isDisplayed, locator));
 			return isDisplayed;
@@ -281,7 +282,7 @@ public class BaseElement {
 		int count = 0;
 		LOOP: while (true) {
 			try{
-				logStartAction(String.format("check if this control '%s' is displayed", locator));
+//				logStartAction(String.format("check if this control '%s' is displayed", locator));
 				boolean isDisplayed = getWebElement(timeOutInSeconds).isDisplayed();
 				logEndAction(String.format("checked if this control '%s' is displayed %s", locator, isDisplayed));
 				return isDisplayed;
@@ -308,7 +309,7 @@ public class BaseElement {
 	 */
 	public boolean isInvisible(int timeoutInSeconds) {
 		try {
-			logStartAction(String.format("check if this control '%s' is invisible after timeoutInSeconds %s", locator, timeoutInSeconds));
+//			logStartAction(String.format("check if this control '%s' is invisible after timeoutInSeconds %s", locator, timeoutInSeconds));
 			boolean isInvisible = DriverManager.getDriver().isElementInvisible(locator, timeoutInSeconds);
 			logEndAction(String.format("checked if this control '%s' is invisible %s", locator, isInvisible));
 			return isInvisible;
@@ -338,7 +339,7 @@ public class BaseElement {
 	 */
 	public boolean isClickable(int timeoutInSeconds) {
 		try {
-			logStartAction(String.format("check if this control '%s' is clickable after timeoutInSeconds %s", locator, timeoutInSeconds));
+//			logStartAction(String.format("check if this control '%s' is clickable after timeoutInSeconds %s", locator, timeoutInSeconds));
 			boolean isClickable = false;
 			synchronized (BaseElement.class) {
 				// must check again as one of the
@@ -366,7 +367,7 @@ public class BaseElement {
 
 	public boolean isPresent(int timeOutInSeconds) {
 		try {
-			logStartAction(String.format("check if this control '%s' is present after timeoutInSeconds %s", locator, timeOutInSeconds));
+//			logStartAction(String.format("check if this control '%s' is present after timeoutInSeconds %s", locator, timeOutInSeconds));
 			WebElement e = null;
 			synchronized (BaseElement.class) {
 				e = DriverManager.getDriver().findElementPresence(locator, timeOutInSeconds);
@@ -394,7 +395,7 @@ public class BaseElement {
 	public String getText(int timeOutInSeconds) {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		logStartAction(String.format("get text of this control '%s' after timeoutInSeconds %s", locator, timeOutInSeconds));
+//		logStartAction(String.format("get text of this control '%s' after timeoutInSeconds %s", locator, timeOutInSeconds));
 		String text = "";
 		while (stopWatch.getElapsedTime() < (timeOutInSeconds*1000)){
 			try{
@@ -467,7 +468,7 @@ public class BaseElement {
 
 	public void scrollToBottom(){
 		try {
-			logStartAction("Starting to scroll to the bottom of this control");
+//			logStartAction("Starting to scroll to the bottom of this control");
 			DriverManager.getDriver().executeJavascript("window.scrollTo(0, document.body.scrollHeight);");
 		} catch(WebDriverException ex ){
 			System.out.println(String.format("WebDriverException: Cannot interact with with this control '%s' because the window is closed.", this.locator));
@@ -479,7 +480,7 @@ public class BaseElement {
 
 	public void scrollToTop(){
 		try {
-			logStartAction("Starting to scroll to the top of this control");
+//			logStartAction("Starting to scroll to the top of this control");
 			DriverManager.getDriver().executeJavascript("window.scrollTo(0, 0);");
 		} catch(WebDriverException ex ){
 			logEndAction(String.format("WebDriverException: Cannot interact with with Element '%s' because the window is closed.", this.locator));
@@ -514,7 +515,7 @@ public class BaseElement {
 	 */
 	public void doubleClick(){
 		try {
-			logStartAction("Double-click on this control");
+//			logStartAction("Double-click on this control");
 			Actions action = new Actions(DriverManager.getDriver().getWebDriver());
 			WebElement webElement = this.getWebElement();
 			action.doubleClick(webElement).perform();
@@ -530,7 +531,7 @@ public class BaseElement {
 	 */
 	public void rightClick(){
 		try {
-			logStartAction("Right-click on this control");
+//			logStartAction("Right-click on this control");
 			Actions action = new Actions(DriverManager.getDriver().getWebDriver());
 			WebElement webElement = this.getWebElement();
 			action.contextClick(webElement).perform();
@@ -554,20 +555,20 @@ public class BaseElement {
 	 * Methods haven't validated yet
 	 */
 	protected Dimension getSize() {
-		logStartAction(String.format("get Size: %s", locator));
+//		logStartAction(String.format("get Size: %s", locator));
 		logEndAction(String.format("got Size '%s': %s", getWebElement().getSize(), locator));
 		return getWebElement().getSize();
 	}
 
 	protected void mouseTo() {
-		logStartAction(String.format("move to: %s", locator));
+//		logStartAction(String.format("move to: %s", locator));
 		Actions actions = new Actions(DriverManager.getDriver().getWebDriver());
 		actions.moveToElement(getWebElement()).perform();
 		logEndAction(String.format("moved to: %s", locator));
 	}
 
 	protected int count() {
-		logStartAction(String.format("get items count : %s", locator));
+//		logStartAction(String.format("get items count : %s", locator));
 		int count = getWebElements().size();
 		logEndAction(String.format("got '%s' element(s): %s", count, locator));
 		return getWebElements().size();
@@ -578,11 +579,11 @@ public class BaseElement {
 	 *********************/
 
 	protected void logStartAction(String msg) {
-		System.out.println(String.format("[Element] Start action: %s", msg));
+//		System.out.println(String.format("[Element] Start action: %s", msg));
 	}
 
 	protected void logEndAction(String msg) {
-		System.out.println(String.format("[Element] Done action: %s", msg));
+//		System.out.println(String.format("[Element] Done action: %s", msg));
 	}
 
 	public WebElement waitForElementToBePresent(By by) {
@@ -590,7 +591,7 @@ public class BaseElement {
 	}
 
 	public WebElement waitForElementToBePresent(By by, int timeOutInSeconds) {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), timeOutInSeconds);
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeOutInSeconds) );
 		return wait.until(ExpectedConditions.presenceOfElementLocated(by));
 	}
 

@@ -306,7 +306,7 @@ public class DateUtils {
      * @return
      * @throws ParseException
      */
-    public static String convertDateToNewTimeZone(String date,String convertFromFormat,String convertFromTimeZone,String convertToFormat, String convertTimeZone) throws ParseException {
+    public static String convertDateToNewTimeZone(String date,String convertFromFormat,String convertFromTimeZone,String convertToFormat, String convertTimeZone){
         DateFormat df = new SimpleDateFormat(convertFromFormat);
         TimeZone timeZone;
 
@@ -316,17 +316,20 @@ public class DateUtils {
             timeZone = TimeZone.getTimeZone(convertTimeZone);
 
         df.setTimeZone(timeZone);
-        Date dateConvertoldFormat = df.parse(date);
-        System.out.println(String.format("Date with format %s as input Timezone: %s ",convertFromFormat,df.format(dateConvertoldFormat)));
-
-        df = new SimpleDateFormat(convertToFormat);
-        System.out.println(String.format("Date with format %s as input Timezone: %s",convertToFormat,df.format(dateConvertoldFormat)));
-
-        TimeZone convertToTimezone = TimeZone.getTimeZone(convertTimeZone);
-        df.setTimeZone(convertToTimezone);
-        System.out.println(String.format("Date with format %s in Timezone %s: %s ",convertToFormat ,convertTimeZone,df.format(dateConvertoldFormat)));
-        return df.format(dateConvertoldFormat);
-
+        Date dateConvertoldFormat = null;
+        try {
+            dateConvertoldFormat = df.parse(date);
+            //System.out.println(String.format("Date with format %s as input Timezone: %s ",convertFromFormat,df.format(dateConvertoldFormat)));
+            df = new SimpleDateFormat(convertToFormat);
+            //System.out.println(String.format("Date with format %s as input Timezone: %s",convertToFormat,df.format(dateConvertoldFormat)));
+            TimeZone convertToTimezone = TimeZone.getTimeZone(convertTimeZone);
+            df.setTimeZone(convertToTimezone);
+            //System.out.println(String.format("Date with format %s in Timezone %s: %s ",convertToFormat ,convertTimeZone,df.format(dateConvertoldFormat)));
+            return df.format(dateConvertoldFormat);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return  "DEBUG error parse date: "+ e;
+        }
     }
     /**
      * Converting a string to a date

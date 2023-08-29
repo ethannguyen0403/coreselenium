@@ -1,4 +1,4 @@
-package com.code88.utils;
+package com.paltech.utils;
 
 import com.paltech.constant.StopWatch;
 import org.openqa.selenium.TimeoutException;

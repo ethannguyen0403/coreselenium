@@ -39,6 +39,19 @@ public class TextBox extends BaseElement {
 		}
 
 	}
+	public void sendKeys1(CharSequence... keysToSend) {
+		try {
+			this.clear();
+			super.sendKeys(keysToSend);
+//		} catch (NullPointerException ex) {
+//			logEndAction(String.format("Error: NullPointer exception is '%s'", ex.getMessage()));
+		} catch (WebDriverException ex) {
+			logEndAction(String.format("Error: WebDriverException exception is '%s'", ex.getMessage()));
+		} catch (Exception ex) {
+			logEndAction(String.format("Exception: can not find element: '%s'", ex.getMessage()));
+		}
+
+	}
 
 	public void type(CharSequence... keysToSend) {
 		this.clear();

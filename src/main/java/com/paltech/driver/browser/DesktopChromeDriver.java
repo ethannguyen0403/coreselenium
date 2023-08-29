@@ -28,14 +28,13 @@ public class DesktopChromeDriver extends Driver {
 		System.out.println(String.format("Picking up ChromeDriver at %s", properties.getExecutablePath()));
 
 		ChromeOptions options = new ChromeOptions();
-		//options = configureChromeOptions();
+//		options = configureChromeOptions();
 
 		//For setting download directory
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 		chromePrefs.put("profile.default_content_settings.popups", 0);
-		chromePrefs.put("download.prompt_for_download", "false");
+		chromePrefs.put("download.prompt_for_download", false);
 		chromePrefs.put("download.default_directory", properties.getDownloadPath());
-
 		if (properties.isProxy()){
 			System.out.println(String.format("Setting proxy is %s", properties.isProxy()));
 			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
@@ -47,7 +46,7 @@ public class DesktopChromeDriver extends Driver {
 			// creating a selenium proxy
 			Proxy seleniumProxy = getSeleniumProxy(proxy);
 			options.setCapability(CapabilityType.PROXY, seleniumProxy);
-			options.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
+//			options.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
 			options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
 			options.setExperimentalOption("prefs",chromePrefs);
 			setWebDriver(new ChromeDriver(options));
@@ -56,14 +55,17 @@ public class DesktopChromeDriver extends Driver {
 			System.out.println("DEBUG: Proxy Port is " + proxy.getPort());
 		} else if (properties.getRemoteURL() == null || properties.getRemoteURL().equals("")) {
 			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
-			options.setExperimentalOption("prefs",chromePrefs);
+			//options.setExperimentalOption("prefs",chromePrefs);
 			setWebDriver(new ChromeDriver(options));
 		} else {
-			options.setExperimentalOption("prefs",chromePrefs);
-			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-			capabilities.setVersion(properties.getBrowserVersion());
-			capabilities.setCapability("platform", properties.getPlatform());
-			setWebDriver(new RemoteWebDriver(new URL(properties.getRemoteURL()), capabilities));
+			//options.setExperimentalOption("prefs",chromePrefs);
+			ChromeOptions browserOption = new ChromeOptions();
+			browserOption.setCapability("version",properties.getBrowserVersion());
+			browserOption.setCapability("version",properties.getPlatform());
+//			DesiredCapabilities capabilities = new DesiredCapabilities.chrome();
+//			capabilities.setVersion(properties.getBrowserVersion());
+//			capabilities.setCapability("platform", properties.getPlatform());
+			setWebDriver(new RemoteWebDriver(new URL(properties.getRemoteURL()), browserOption));
 		}
 	}
 
