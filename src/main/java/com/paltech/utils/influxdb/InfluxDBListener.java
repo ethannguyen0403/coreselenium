@@ -1,4 +1,4 @@
-package com.paltech.utils;
+package com.paltech.utils.influxdb;
 import org.influxdb.dto.Point;
 import org.testng.ITestContext;
 import org.testng.ITestListener;

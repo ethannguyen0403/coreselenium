@@ -1,4 +1,4 @@
-package com.paltech.utils;
+package com.paltech.utils.influxdb;
 
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;

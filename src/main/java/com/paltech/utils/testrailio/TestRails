@@ -1,4 +1,4 @@
-package com.paltech.utils.testrail;
+package com.paltech.utils.testrailio;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

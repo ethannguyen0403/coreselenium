@@ -1,15 +1,14 @@
 package com.paltech.element.common;
 
+import com.paltech.driver.DriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
-import com.paltech.driver.DriverManager;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +100,7 @@ public class DropDownBox {
 	}
 
 	public WebElement waitForElementToBePresent(By by, int timeOutInSeconds) {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), timeOutInSeconds);
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeOutInSeconds));
 		return wait.until(ExpectedConditions.presenceOfElementLocated(by));
 	}
 

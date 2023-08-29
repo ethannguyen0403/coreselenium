@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -95,8 +96,8 @@ public class Driver implements WebDriver {
 	 * @return WebElements
 	 */
 	public List<WebElement> findElements(By by) {
-		logStartAction(String.format("find elements: %s", by));
-		WebDriverWait driverWait = new WebDriverWait(webDriver, driverProperties.getElementWaitTimeOut());
+//		logStartAction(String.format("find elements: %s", by));
+		WebDriverWait driverWait = new WebDriverWait(webDriver, Duration.ofSeconds(driverProperties.getElementWaitTimeOut()));
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		List<WebElement> elems = null;
@@ -129,8 +130,8 @@ public class Driver implements WebDriver {
 	}
 
 	public WebElement findElement(By by, boolean isLog) {
-		if(isLog) {logStartAction(String.format("find element '%s'", by.toString()));}
-		WebDriverWait driverWait = new WebDriverWait(webDriver, driverProperties.getElementWaitTimeOut());
+//		if(isLog) {logStartAction(String.format("find element '%s'", by.toString()));}
+		WebDriverWait driverWait = new WebDriverWait(webDriver, Duration.ofSeconds(driverProperties.getElementWaitTimeOut()));
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		WebElement elem = null;
@@ -159,8 +160,8 @@ public class Driver implements WebDriver {
 	 * @return WebElement
 	 */
 	public WebElement findElement(By by, int timeOutSeconds) {
-		logStartAction(String.format("find element '%s'", by.toString()));
-		WebDriverWait driverWait = new WebDriverWait(webDriver, driverProperties.getElementWaitTimeOut());
+//		logStartAction(String.format("find element '%s'", by.toString()));
+		WebDriverWait driverWait = new WebDriverWait(webDriver, Duration.ofSeconds(driverProperties.getElementWaitTimeOut()));
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		WebElement elem = null;
@@ -185,16 +186,16 @@ public class Driver implements WebDriver {
 
 	/**
 	 * Checking if a control is invisible after period of time
-	 * author: liam.ho
+	 * author: isabella.huynh
 	 * @param by locator
 	 * @param timeout how many seconds you want to wait for this control
 	 * @return boolean
 	 */
 	public boolean isElementInvisible(By by, int timeout){
-		logStartAction(String.format("Waiting an element '%s' invisible within timeout %s", by, timeout));
+//		logStartAction(String.format("Waiting an element '%s' invisible within timeout %s", by, timeout));
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		WebDriverWait driverWait = new WebDriverWait(webDriver, timeout);
+		WebDriverWait driverWait = new WebDriverWait(webDriver, Duration.ofSeconds(timeout));
 		while (stopWatch.getElapsedTime() < (timeout*1000)){
 			try {
 				Boolean isInvisible = driverWait.until(ExpectedConditions.invisibilityOfElementLocated(by));
@@ -222,8 +223,8 @@ public class Driver implements WebDriver {
 	 * @return WebElement
 	 */
 	public WebElement findElementPresence(By by, int timeoutInSeconds) {
-		logStartAction(String.format("find element: %s", by.toString()));
-		WebDriverWait driverWait = new WebDriverWait(webDriver, timeoutInSeconds);
+//		logStartAction(String.format("find element: %s", by.toString()));
+		WebDriverWait driverWait = new WebDriverWait(webDriver, Duration.ofSeconds(timeoutInSeconds));
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		WebElement elem = null;
@@ -246,8 +247,8 @@ public class Driver implements WebDriver {
 	}
 
 	public List<WebElement> findElementPresences(By by) {
-		logStartAction(String.format("find elements: %s", by));
-		WebDriverWait driverWait = new WebDriverWait(webDriver, driverProperties.getElementWaitTimeOut());
+//		logStartAction(String.format("find elements: %s", by));
+		WebDriverWait driverWait = new WebDriverWait(webDriver, Duration.ofSeconds(driverProperties.getElementWaitTimeOut()));
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		List<WebElement> lstElements = null;
@@ -279,10 +280,10 @@ public class Driver implements WebDriver {
 	 * @return boolean
 	 */
 	public boolean isElementVisible(By by, int timeout){
-		logStartAction(String.format("Waiting an element '%s' visible within timeout %s", by, timeout));
+//		logStartAction(String.format("Waiting an element '%s' visible within timeout %s", by, timeout));
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		WebDriverWait driverWait = new WebDriverWait(webDriver, timeout);
+		WebDriverWait driverWait = new WebDriverWait(webDriver,Duration.ofSeconds( timeout));
 		WebElement element = null;
 		while (stopWatch.getElapsedTime() < (timeout*1000)){
 			try {
@@ -313,10 +314,10 @@ public class Driver implements WebDriver {
 	 * @return boolean
 	 */
 	public boolean isElementClickable(By by, int timeout){
-		logStartAction(String.format("Waiting for an element '%s' is clickable within timeout %s", by, timeout));
+//		logStartAction(String.format("Waiting for an element '%s' is clickable within timeout %s", by, timeout));
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		WebDriverWait driverWait = new WebDriverWait(webDriver, timeout);
+		WebDriverWait driverWait = new WebDriverWait(webDriver, Duration.ofSeconds(timeout));
 		WebElement element = null;
 		while (stopWatch.getElapsedTime() < (timeout*1000)){
 			try {
@@ -343,30 +344,29 @@ public class Driver implements WebDriver {
 
 	public String getPageSource() {
 		logEndAction("get Page Source");
-		logEndAction("got Page Source");
 		return webDriver.getPageSource();
 	}
 
 	public void close() {
-		logStartAction("close Window");
+//		logStartAction("close Window");
 		webDriver.close();
 		logEndAction("closed Window");
 	}
 
 	public void quit() {
-		logStartAction("quit browser");
+//		logStartAction("quit browser");
 		webDriver.quit();
 		logEndAction("quited browser");
 	}
 
 	public Set<Cookie> getCookies(){
-		logStartAction("get cookies");
+//		logStartAction("get cookies");
 		logEndAction("got cookies");
 		return this.webDriver.manage().getCookies();
 	}
 
 	public void active(){
-		logStartAction("activate");
+//		logStartAction("activate");
 		logEndAction("activated");
 	}
 
@@ -375,20 +375,20 @@ public class Driver implements WebDriver {
 	}
 
 	public void deleteAllCookies(){
-		logStartAction("delete cookies");
+//		logStartAction("delete cookies");
 		this.webDriver.manage().deleteAllCookies();
 		logEndAction("deleted cookies");
 	}
 
 	public void deleteCookie(String cookieName){
-		logStartAction(String.format("delete a cookie name '%s'", cookieName));
+//		logStartAction(String.format("delete a cookie name '%s'", cookieName));
 		this.webDriver.manage().deleteCookieNamed(cookieName);
 		logEndAction("deleted this cookie");
 	}
 
 	public void back(){
 		try {
-			logStartAction("click back button on browser");
+//			logStartAction("click back button on browser");
 			this.webDriver.navigate().back();
 			logEndAction("clicked back button on browser");
 		} catch (TimeoutException ex){
@@ -399,7 +399,7 @@ public class Driver implements WebDriver {
 
 	public void refresh(){
 		try {
-			logStartAction("refresh icon on browser");
+//			logStartAction("refresh icon on browser");
 			this.webDriver.navigate().refresh();
 			logEndAction("refreshed icon on browser");
 		} catch (TimeoutException ex){
@@ -478,7 +478,7 @@ public class Driver implements WebDriver {
 		try {
 			logStartAction("switch to Alert popup");
 			logStartAction("switched to Alert popup");
-			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 3);
+			WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(3));
 			wait.until(ExpectedConditions.alertIsPresent());
 			return this.getWebDriver().switchTo().alert();
 		} catch (TimeoutException ex){
@@ -702,7 +702,7 @@ public class Driver implements WebDriver {
 	}
 
 	public void waitForElement(WebElement element, int timeoutSeconds){
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), timeoutSeconds);
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeoutSeconds));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 

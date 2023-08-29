@@ -47,7 +47,7 @@ public class SimpleElement {
 
     public void click() {
         try {
-            logStartAction(String.format("click: '%s'", locator));
+//            logStartAction(String.format("click: '%s'", locator));
             getWebElement().click();
             logEndAction(String.format("clicked: '%s'", locator));
         } catch (NullPointerException ex) {
@@ -59,7 +59,7 @@ public class SimpleElement {
 
     protected String getTagName() {
         try{
-            logStartAction(String.format("get Tag Name: '%s'", locator));
+//            logStartAction(String.format("get Tag Name: '%s'", locator));
             String tagName = getWebElement().getTagName();
             logEndAction(String.format("got Tag Name value '%s' is %s", tagName, locator));
             return tagName;
@@ -78,7 +78,7 @@ public class SimpleElement {
 
     public String getAttribute(String name, boolean isLogged) {
         try{
-            if(isLogged){logStartAction(String.format("get '%s' attribute: %s", name, locator));}
+//            if(isLogged){logStartAction(String.format("get '%s' attribute: %s", name, locator));}
             String value = getWebElement(false).getAttribute(name);
             if(isLogged){logEndAction(String.format("got attribute value '%s' is %s", value, locator));}
             return value;
@@ -97,7 +97,7 @@ public class SimpleElement {
      */
     public boolean isSelected() {
         try {
-            logStartAction(String.format("check if this control '%s' is selected", locator));
+//            logStartAction(String.format("check if this control '%s' is selected", locator));
             boolean isSelected = getWebElement().isSelected();
             logEndAction(String.format("checked if this control '%s' selected is  %s", locator, isSelected));
             return isSelected;
@@ -117,7 +117,7 @@ public class SimpleElement {
      */
     public boolean isEnabled() {
         try{
-            logStartAction(String.format("get if this control '%s' is enabled status", locator));
+//            logStartAction(String.format("get if this control '%s' is enabled status", locator));
             boolean isEnabled = getWebElement().isEnabled();
             logEndAction(String.format("got if this control '%s' is enabled %s", isEnabled, locator));
             return isEnabled;
@@ -138,7 +138,7 @@ public class SimpleElement {
     public String getText(int timeOutInSeconds) {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        logStartAction(String.format("get text of this control '%s' after timeoutInSeconds %s", locator, timeOutInSeconds));
+//        logStartAction(String.format("get text of this control '%s' after timeoutInSeconds %s", locator, timeOutInSeconds));
         String text = "";
         while (stopWatch.getElapsedTime() < (timeOutInSeconds*1000)){
             try{
@@ -174,7 +174,7 @@ public class SimpleElement {
             logEndAction(String.format("checked if this control displayed is %s with xpath '%s'", isDisplayed, locator));
             return isDisplayed;
         }  catch (StaleElementReferenceException ex) {
-            logStartAction(String.format("Error: StaleElementReferenceException is still waiting for this element '%s'", locator));
+//            logStartAction(String.format("Error: StaleElementReferenceException is still waiting for this element '%s'", locator));
             return false;
         } catch (NullPointerException ex) {
             logEndAction(String.format("Error: NullPointer exception is '%s'", ex.getMessage()));
@@ -193,7 +193,7 @@ public class SimpleElement {
      */
     public boolean isInvisible(int timeoutInSeconds) {
         try {
-            logStartAction(String.format("check if this control is invisible after timeoutInSeconds %s by locator '%s'", timeoutInSeconds, locator));
+//            logStartAction(String.format("check if this control is invisible after timeoutInSeconds %s by locator '%s'", timeoutInSeconds, locator));
             boolean isInvisible = DriverManager.getDriver().isElementInvisible(locator, timeoutInSeconds);
             logEndAction(String.format("checked if this control invisible is %s by locator '%s'", isInvisible, locator));
             return isInvisible;
@@ -208,10 +208,10 @@ public class SimpleElement {
 
     //Private area
     private void logStartAction(String msg) {
-        System.out.println(String.format("[Element]Start action: %s", msg));
+//        System.out.println(String.format("[Element]Start action: %s", msg));
     }
 
     private void logEndAction(String msg) {
-        System.out.println(String.format("[Element]Done action: %s", msg));
+//        System.out.println(String.format("[Element]Done action: %s", msg));
     }
 }
