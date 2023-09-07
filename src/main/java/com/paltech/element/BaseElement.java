@@ -143,7 +143,7 @@ public class BaseElement {
 	protected String getTagName() {
 		try{
 //			logStartAction(String.format("get Tag Name: '%s'", locator));
-			String tagName = getWebElement().getTagName();
+			String tagName = getWebElements().get(0).getTagName();
 			logEndAction(String.format("got Tag Name value '%s' is %s", tagName, locator));
 			return tagName;
 		} catch (NullPointerException ex) {
@@ -182,7 +182,7 @@ public class BaseElement {
 	public String getColour(String name) {
 		try{
 //			logStartAction(String.format("get %s color: %s", name, locator));
-			String value = getWebElement().getCssValue(name);
+			String value = getWebElements().get(0).getCssValue(name);
 			logEndAction(String.format("got color '%s' is %s", value, locator));
 			return value;
 	/*	} catch (NullPointerException ex) {
@@ -215,7 +215,7 @@ public class BaseElement {
 	public boolean isSelected() {
 		try {
 //			logStartAction(String.format("check if this control '%s' is selected", locator));
-			boolean isSelected = getWebElement().isSelected();
+			boolean isSelected = getWebElements().get(0).isSelected();
 			logEndAction(String.format("checked if this control '%s' selected is  %s", locator, isSelected));
 			return isSelected;
 
@@ -235,7 +235,7 @@ public class BaseElement {
 	public boolean isEnabled() {
 		try{
 //			logStartAction(String.format("get if this control '%s' is enabled status", locator));
-			boolean isEnabled = getWebElement().isEnabled();
+			boolean isEnabled = getWebElements().get(0).isEnabled();
 			logEndAction(String.format("got if this control '%s' is enabled %s", isEnabled, locator));
 			return isEnabled;
 		} catch (NullPointerException ex){
@@ -283,7 +283,7 @@ public class BaseElement {
 		LOOP: while (true) {
 			try{
 //				logStartAction(String.format("check if this control '%s' is displayed", locator));
-				boolean isDisplayed = getWebElement(timeOutInSeconds).isDisplayed();
+				boolean isDisplayed = getWebElements().get(0).isDisplayed();
 				logEndAction(String.format("checked if this control '%s' is displayed %s", locator, isDisplayed));
 				return isDisplayed;
 			} catch (NullPointerException ex) {
@@ -324,7 +324,7 @@ public class BaseElement {
 
 	public void waitForControlInvisible(int timeOutDisplayed, int timeOutInvisible) {
 		if(isDisplayed(timeOutShortInSeconds)){
-		isInvisible(timeOutInvisible);
+			isInvisible(timeOutInvisible);
 		}
 	}
 
@@ -399,7 +399,7 @@ public class BaseElement {
 		String text = "";
 		while (stopWatch.getElapsedTime() < (timeOutInSeconds*1000)){
 			try{
-				instance = this.getWebElement();
+				instance = this.getWebElements().get(0);
 				if (instance != null){
 					text = instance.getText();
 					logEndAction(String.format("got text of this control '%s' is  %s", locator, text));
@@ -431,7 +431,7 @@ public class BaseElement {
 	 * scrolling down a distance to be visible an invisible control
 	 */
 	public void scrollDownInDistance(){
-		WebElement e = this.getWebElement();
+		WebElement e = this.getWebElements().get(0);
 		int x = e.getLocation().getX();
 		int y = e.getLocation().getY() + 20;
 		DriverManager.getDriver().executeJavascript(e, String.format("window.scrollTo(%s, %s);", x, y));
@@ -448,7 +448,7 @@ public class BaseElement {
 		stopWatch.start();
 		while(stopWatch.getElapsedTime() < (2 * 1000)){
 			try{
-				WebElement e = this.getWebElement();
+				WebElement e = this.getWebElements().get(0);
 				if(e == null){
 					throw new Exception(String.format("Error: Java-script Scroll to this control '%s'", locator));
 				} else{
@@ -547,7 +547,7 @@ public class BaseElement {
 	 */
 	public void moveToTheControl(){
 		Actions action = new Actions(DriverManager.getDriver().getWebDriver());
-		WebElement webElement = this.getWebElement();
+		WebElement webElement = this.getWebElements().get(0);
 		action.moveToElement(webElement).perform();
 	}
 
@@ -556,14 +556,14 @@ public class BaseElement {
 	 */
 	protected Dimension getSize() {
 //		logStartAction(String.format("get Size: %s", locator));
-		logEndAction(String.format("got Size '%s': %s", getWebElement().getSize(), locator));
+		logEndAction(String.format("got Size '%s': %s", getWebElements().get(0).getSize(), locator));
 		return getWebElement().getSize();
 	}
 
 	protected void mouseTo() {
 //		logStartAction(String.format("move to: %s", locator));
 		Actions actions = new Actions(DriverManager.getDriver().getWebDriver());
-		actions.moveToElement(getWebElement()).perform();
+		actions.moveToElement(getWebElements().get(0)).perform();
 		logEndAction(String.format("moved to: %s", locator));
 	}
 
