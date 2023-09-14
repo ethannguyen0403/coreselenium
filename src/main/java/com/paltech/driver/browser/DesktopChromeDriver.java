@@ -28,7 +28,7 @@ public class DesktopChromeDriver extends Driver {
 		System.out.println(String.format("Picking up ChromeDriver at %s", properties.getExecutablePath()));
 
 		ChromeOptions options = new ChromeOptions();
-//		options = configureChromeOptions();
+		//options = configureChromeOptions();
 
 		//For setting download directory
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
@@ -54,11 +54,13 @@ public class DesktopChromeDriver extends Driver {
 			properties.setBrowserMobProxy(proxy);
 			System.out.println("DEBUG: Proxy Port is " + proxy.getPort());
 		} else if (properties.getRemoteURL() == null || properties.getRemoteURL().equals("")) {
+			System.out.println("remote");
 			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
 			//options.setExperimentalOption("prefs",chromePrefs);
 			setWebDriver(new ChromeDriver(options));
 		} else {
 			//options.setExperimentalOption("prefs",chromePrefs);
+			System.out.println("Normal");
 			ChromeOptions browserOption = new ChromeOptions();
 			browserOption.setCapability("version",properties.getBrowserVersion());
 			browserOption.setCapability("version",properties.getPlatform());

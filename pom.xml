@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.paltech</groupId>
 	<artifactId>coreselenium</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 <!--		<packaging>pom</packaging>-->
-	<packaging>jar</packaging>
+<!--	<packaging>jar</packaging>-->
 	<name>CoreSelenium</name>
 	<url>http://maven.apache.org</url>
 
@@ -51,17 +51,17 @@
 			<artifactId>java-client</artifactId>
 			<version>2.1.0</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>com.saucelabs</groupId>-->
-<!--			<artifactId>sauce_testng</artifactId>-->
-<!--			<version>2.1.23</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>com.saucelabs</groupId>-->
-<!--			<artifactId>sauce_java_common</artifactId>-->
-<!--			<version>2.1.23</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>com.saucelabs</groupId>
+			<artifactId>sauce_testng</artifactId>
+			<version>2.1.25</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.saucelabs</groupId>
+			<artifactId>sauce_java_common</artifactId>
+			<version>2.1.25</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
