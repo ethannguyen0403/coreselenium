@@ -3,6 +3,7 @@ package com.paltech.driver.cloud;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.saucelabs.common.SauceOnDemandAuthentication;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -11,10 +12,8 @@ import com.paltech.constant.CoreConstants.Browser;
 import com.paltech.constant.CoreConstants.Platform;
 import com.paltech.driver.Driver;
 import com.paltech.driver.DriverProperties;
-import com.saucelabs.common.SauceOnDemandAuthentication;
 
 public class SauceLabsDriver extends Driver {
-
 	public SauceLabsDriver(DriverProperties properties) throws MalformedURLException {
 		super(properties);
 //		String username = "Partner_Test";
