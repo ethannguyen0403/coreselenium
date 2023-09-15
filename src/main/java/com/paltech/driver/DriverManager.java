@@ -113,6 +113,7 @@ public class DriverManager {
                 case WINDOWS:
                 default:
                     driver = initSeleniumDriver(driverProperties);
+                    System.out.println(String.format("[STEP] path driver on %s.",   driver.driverProperties.getExecutablePath()));
                     break;
             }
         }
@@ -121,6 +122,7 @@ public class DriverManager {
 
     private static Driver initSeleniumDriver(DriverProperties driverProperties) throws MalformedURLException {
         System.out.println(String.format("[STEP] Init WebDriver for %s browser on %s.", driverProperties.getBrowserName(), driverProperties.getPlatform()));
+//        System.out.println(String.format("[STEP] browser path on %s.", driverProperties.getExecutablePath()));
         switch (driverProperties.getBrowserName()) {
             case FIREFOX:
                 return new DesktopFireFoxDriver(driverProperties);
