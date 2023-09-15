@@ -6,7 +6,6 @@ import com.paltech.constant.CoreConstants.Platform;
 import net.lightbody.bmp.BrowserMobProxy;
 
 public class DriverProperties {
-
 	private Browser browserName;
 	private String browserVersion;
 	private Platform platform;

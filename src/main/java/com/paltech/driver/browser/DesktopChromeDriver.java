@@ -9,7 +9,6 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.Inet4Address;
@@ -25,10 +24,11 @@ import java.util.HashMap;
 public class DesktopChromeDriver extends Driver {
 	public DesktopChromeDriver(DriverProperties properties) throws MalformedURLException {
 		super(properties);
+
 		System.out.println(String.format("Picking up ChromeDriver at %s", properties.getExecutablePath()));
 
 		ChromeOptions options = new ChromeOptions();
-		//options = configureChromeOptions();
+		options = configureChromeOptions();
 
 		//For setting download directory
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
@@ -37,7 +37,7 @@ public class DesktopChromeDriver extends Driver {
 		chromePrefs.put("download.default_directory", properties.getDownloadPath());
 		if (properties.isProxy()){
 			System.out.println(String.format("Setting proxy is %s", properties.isProxy()));
-			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
+//			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
 			// set dowload path
 
 			// creating a mob proxy
@@ -55,7 +55,14 @@ public class DesktopChromeDriver extends Driver {
 			System.out.println("DEBUG: Proxy Port is " + proxy.getPort());
 		} else if (properties.getRemoteURL() == null || properties.getRemoteURL().equals("")) {
 			System.out.println("remote");
-			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
+//			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
+
+			System.setProperty("webdriver.http.factory", "jdk-http-client");
+			System.setProperty("webdriver.chrome.logfile", "chromedriverlogs.log");
+			System.setProperty("webdriver.chrome.verboseLogging", "true");
+			options.addArguments("--remote-allow-origins=*");
+			System.out.println("version"+ options.getBrowserVersion());
+			System.out.println("version"+ options.getBrowserVersion());
 			//options.setExperimentalOption("prefs",chromePrefs);
 			setWebDriver(new ChromeDriver(options));
 		} else {
@@ -103,9 +110,8 @@ public class DesktopChromeDriver extends Driver {
 	}
 
 	private ChromeOptions configureChromeOptions(){
-
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--headless");
+		options.addArguments("--headless=new");
 //		options.setBinary("C:\\Users\\isabella.huynh\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe");
 		options.addArguments("--window-size=1920,1080");
 		return options;
