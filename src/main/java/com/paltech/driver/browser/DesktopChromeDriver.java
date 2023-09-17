@@ -68,13 +68,13 @@ public class DesktopChromeDriver extends Driver {
 		} else {
 			//options.setExperimentalOption("prefs",chromePrefs);
 			System.out.println("Normal");
-			ChromeOptions browserOption = new ChromeOptions();
-			browserOption.setCapability("version",properties.getBrowserVersion());
-			browserOption.setCapability("version",properties.getPlatform());
+			options.addArguments("--remote-allow-origins=*");
+			options.setCapability("version",properties.getBrowserVersion());
+			options.setCapability("version",properties.getPlatform());
 //			DesiredCapabilities capabilities = new DesiredCapabilities.chrome();
 //			capabilities.setVersion(properties.getBrowserVersion());
 //			capabilities.setCapability("platform", properties.getPlatform());
-			setWebDriver(new RemoteWebDriver(new URL(properties.getRemoteURL()), browserOption));
+			setWebDriver(new RemoteWebDriver(new URL(properties.getRemoteURL()), options));
 		}
 	}
 
