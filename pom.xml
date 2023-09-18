@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.paltech</groupId>
 	<artifactId>coreselenium</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 		<packaging>pom</packaging>
 <!--	<packaging>jar</packaging>-->
 	<name>CoreSelenium</name>
@@ -182,6 +182,11 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>31.0.1-jre</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>5.5.3</version>
 		</dependency>
 	</dependencies>
 
