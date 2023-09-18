@@ -35,7 +35,7 @@ public class isaTests {
         driverProperties.setBrowserName(CoreConstants.Browser.CHROME);
         driverProperties.setPlatform(CoreConstants.Platform.WINDOWS);
         driverProperties.setPlatformVersion("7");
-//        driverProperties.setExecutablePath("\\drivers\\chromedriver.exe");
+        driverProperties.setExecutablePath("\\drivers\\chromedriver.exe");
         int count = 3;
         DriverManager.quitAll();
         while (count-- > 0) {
