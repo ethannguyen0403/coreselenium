@@ -28,7 +28,7 @@ public class DesktopChromeDriver extends Driver {
 		System.out.println(String.format("Picking up ChromeDriver at %s", properties.getExecutablePath()));
 
 		ChromeOptions options = new ChromeOptions();
-		options = configureChromeOptions();
+		//options = configureChromeOptions();
 
 		//For setting download directory
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
@@ -59,7 +59,8 @@ public class DesktopChromeDriver extends Driver {
 			System.setProperty("webdriver.http.factory", "jdk-http-client");
 			System.setProperty("webdriver.chrome.logfile", "chromedriverlogs.log");
 			System.setProperty("webdriver.chrome.verboseLogging", "true");
-			options.addArguments("--remote-allow-origins=*");
+			//options.addArguments("--remote-allow-origins=*");
+	//		options.addExtensions(new File("/path/to/extension.crx"));
 			//options.setExperimentalOption("prefs",chromePrefs);
 			setWebDriver(new ChromeDriver(options));
 		} else {
