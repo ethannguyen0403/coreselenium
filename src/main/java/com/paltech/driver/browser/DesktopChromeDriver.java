@@ -28,7 +28,7 @@ public class DesktopChromeDriver extends Driver {
 		System.out.println(String.format("Picking up ChromeDriver at %s", properties.getExecutablePath()));
 
 		ChromeOptions options = new ChromeOptions();
-		//options = configureChromeOptions();
+		options = configureChromeOptions();
 
 		//For setting download directory
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
@@ -59,6 +59,8 @@ public class DesktopChromeDriver extends Driver {
 			System.setProperty("webdriver.http.factory", "jdk-http-client");
 			System.setProperty("webdriver.chrome.logfile", "chromedriverlogs.log");
 			System.setProperty("webdriver.chrome.verboseLogging", "true");
+			// Add user-agent for detect by Silence project
+			options.addArguments("user-agent=merito-qa-automation");
 			//options.addArguments("--remote-allow-origins=*");
 	//		options.addExtensions(new File("/path/to/extension.crx"));
 			//options.setExperimentalOption("prefs",chromePrefs);
@@ -110,7 +112,6 @@ public class DesktopChromeDriver extends Driver {
 	private ChromeOptions configureChromeOptions(){
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--headless=new");
-//		options.setBinary("C:\\Users\\isabella.huynh\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe");
 		options.addArguments("--window-size=1920,1080");
 		return options;
 	}
