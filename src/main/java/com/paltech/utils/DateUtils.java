@@ -4,8 +4,11 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -381,6 +384,63 @@ public class DateUtils {
     public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
         long diffInMillies = date2.getTime()-date1.getTime();
         return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
+    }
+
+    public static String getFirstDayOfCurrentWeek(String formatDate) {
+        String firstDayWeek = null;
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Date date = c.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat(formatDate);
+        try {
+            firstDayWeek = sdf.format(date);
+            System.out.println(firstDayWeek );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return firstDayWeek;
+    }
+
+    public static String getLastDayOfCurrentWeek(String formatDate) {
+        String lastDayWeek = null;
+        Calendar c = Calendar.getInstance();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        Date date = c.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat(formatDate);
+        try {
+            lastDayWeek = sdf.format(date);
+            System.out.println(lastDayWeek );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lastDayWeek;
+    }
+
+    public static String getFirstDateOfMonth(int year, int month, String formatDate) {
+        String firstDayMonth = null;
+        YearMonth yearMonth = YearMonth.of( year, month );
+        LocalDate firstOfMonth = yearMonth.atDay( 1 );
+        try {
+            firstDayMonth = firstOfMonth.format(DateTimeFormatter.ofPattern(formatDate));
+            System.out.println(firstDayMonth );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return firstDayMonth;
+    }
+
+    public static String getLastDateOfMonth(int year, int month, String formatDate) {
+        String lastDayMonth = null;
+        YearMonth yearMonth = YearMonth.of( year, month );
+        LocalDate lastOfMonth = yearMonth.atEndOfMonth();
+        try {
+            lastDayMonth = lastOfMonth.format(DateTimeFormatter.ofPattern(formatDate));
+            System.out.println(lastDayMonth );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lastDayMonth;
     }
 ///////////////////
 
