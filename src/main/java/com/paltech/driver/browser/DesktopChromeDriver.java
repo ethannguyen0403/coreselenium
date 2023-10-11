@@ -61,19 +61,13 @@ public class DesktopChromeDriver extends Driver {
 			System.setProperty("webdriver.chrome.verboseLogging", "true");
 			// Add user-agent for detect by Silence project
 			options.addArguments("user-agent=merito-qa-automation");
-			//options.addArguments("--remote-allow-origins=*");
-	//		options.addExtensions(new File("/path/to/extension.crx"));
-			//options.setExperimentalOption("prefs",chromePrefs);
 			setWebDriver(new ChromeDriver(options));
 		} else {
-			//options.setExperimentalOption("prefs",chromePrefs);
+
 			System.out.println("Normal");
 			options.addArguments("--remote-allow-origins=*");
 			options.setCapability("version",properties.getBrowserVersion());
 			options.setCapability("version",properties.getPlatform());
-//			DesiredCapabilities capabilities = new DesiredCapabilities.chrome();
-//			capabilities.setVersion(properties.getBrowserVersion());
-//			capabilities.setCapability("platform", properties.getPlatform());
 			setWebDriver(new RemoteWebDriver(new URL(properties.getRemoteURL()), options));
 		}
 	}
