@@ -5,9 +5,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.testng.internal.TestResult;
 
-public class EyeSlack {
+public class EyesSlack {
     @SuppressWarnings("unused")
     public static void post(TestResults res, String slackWebhookURL){
         String color = "";
