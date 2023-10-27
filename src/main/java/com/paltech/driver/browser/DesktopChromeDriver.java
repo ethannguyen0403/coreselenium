@@ -69,7 +69,9 @@ public class DesktopChromeDriver extends Driver {
 			options.setCapability("browserVersion",properties.getBrowserVersion());
 			options.setCapability("platformName",properties.getPlatform());
 			options.setCapability("se:name", "My simple test");
-			options.setCapability("se:sampleMetadata", "Sample metadata value");
+			options.setCapability("se:name", "My simple test");
+			options.setCapability("se:noVncPort","7900");
+			options.setCapability("se:vncEnabled","true");
 		//	System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
 			setWebDriver(new RemoteWebDriver(new URL(properties.getRemoteURL()), options));
 		}
