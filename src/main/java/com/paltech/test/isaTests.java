@@ -35,8 +35,8 @@ public class isaTests {
         driverProperties.setPlatform(CoreConstants.Platform.WINDOWS);
         driverProperties.setPlatformVersion("11");
         driverProperties.setExecutablePath("\\drivers\\chromedriver.exe");
-        driverProperties.setRemoteURL("http://10.42.2.27:5555");
-        //driverProperties.setRemoteURL("http://192.168.10.112:4444");
+        //driverProperties.setRemoteURL("http://10.42.2.27:5555");
+        driverProperties.setRemoteURL("http://192.168.10.112:4444");
         int count = 3;
         DriverManager.quitAll();
         while (count-- > 0) {

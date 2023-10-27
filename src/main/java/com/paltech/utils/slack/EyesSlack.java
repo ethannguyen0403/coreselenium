@@ -7,7 +7,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 public class EyesSlack {
-  //  @SuppressWarnings("unused")
+//    @SuppressWarnings("unused")
 //    public static void post(TestResults res, String slackWebhookURL){
 //        String color = "";
 //        String fallback = "Test Result";
