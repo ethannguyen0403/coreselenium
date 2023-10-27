@@ -8,7 +8,9 @@ public class CoreConstants {
 			public String toString() {
 				return "WINDOWS";
 			}
-		}, MAC, ANDROID, IOS, LINUX, OSX
+		}, MAC, ANDROID {
+			public String toString() {return "ANDROID";}
+		}, IOS, LINUX, OSX
 	}
 
 	public enum Browser { FIREFOX, INTERNET_EXPLORER, SAFARI, CHROME, BROWSER, EDGE}

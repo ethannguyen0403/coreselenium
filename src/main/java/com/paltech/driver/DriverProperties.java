@@ -21,6 +21,10 @@ public class DriverProperties {
 	// only for SauceLabs cloud
 	private String methodName;
 
+	//use for mobile android
+	private String UDID;
+	private String autonationName;
+
 	public Browser getBrowserName() {
 		return browserName;
 	}
@@ -115,6 +119,22 @@ public class DriverProperties {
 
 	public void setBrowserMobProxy(BrowserMobProxy browserMobProxy) {
 		this.browserMobProxy = browserMobProxy;
+	}
+
+	public String getUDID() {
+		return UDID;
+	}
+
+	public void setUDID(String UDID) {
+		this.UDID = UDID;
+	}
+
+	public String getAutomationName() {
+		return autonationName;
+	}
+
+	public void setAutonationName(String autonationName) {
+		this.autonationName = autonationName;
 	}
 
 }
