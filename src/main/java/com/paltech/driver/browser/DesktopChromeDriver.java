@@ -28,7 +28,7 @@ public class DesktopChromeDriver extends Driver {
 		System.out.println(String.format("Picking up ChromeDriver at %s", properties.getExecutablePath()));
 
 		ChromeOptions options = new ChromeOptions();
-		options = configureChromeOptions();
+		//options = configureChromeOptions();
 
 		//For setting download directory
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
@@ -66,8 +66,11 @@ public class DesktopChromeDriver extends Driver {
 
 			System.out.println("Normal");
 			options.addArguments("--remote-allow-origins=*");
-			options.setCapability("version",properties.getBrowserVersion());
-			options.setCapability("version",properties.getPlatform());
+			options.setCapability("browserVersion",properties.getBrowserVersion());
+			options.setCapability("platformName",properties.getPlatform());
+			options.setCapability("se:name", "My simple test");
+			options.setCapability("se:sampleMetadata", "Sample metadata value");
+		//	System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
 			setWebDriver(new RemoteWebDriver(new URL(properties.getRemoteURL()), options));
 		}
 	}

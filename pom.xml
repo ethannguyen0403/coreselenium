@@ -38,6 +38,11 @@
 <!--			<version>3.141.59</version>-->
 			<version>4.12.1</version>
 		</dependency>
+<!--		<dependency>-->
+<!--		<groupId>org.seleniumhq.selenium</groupId>-->
+<!--		<artifactId>selenium-server</artifactId>-->
+<!--		<version>4.14.1</version>-->
+<!--		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-http-jdk-client -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
