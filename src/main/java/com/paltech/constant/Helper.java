@@ -66,7 +66,7 @@ public class Helper {
      */
     public static void loginBOIgnoreCaptcha(String sosURL, String urlDashBoard, String username, String password, boolean isRaise) throws Exception {
         String java_home = System.getenv("JAVA_HOME");
-        if (java_home.contains("Java")) {
+        if (java_home.contains("jdk")) {
             String certificatesTrustStorePath = String.format("%s\\jre\\lib\\security\\cacerts", java_home);
             System.setProperty("javax.net.ssl.trustStore", certificatesTrustStorePath);
             System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
@@ -113,7 +113,7 @@ public class Helper {
 
     public static void loginAQSAPI(String sosURL, String urlDashBoard, String username, String password, boolean isRaise) throws Exception {
         String java_home = System.getenv("JAVA_HOME");
-        if (java_home.contains("Java")) {
+        if (java_home.contains("jdk")) {
             String certificatesTrustStorePath = String.format("%s\\jre\\lib\\security\\cacerts", java_home);
             System.setProperty("javax.net.ssl.trustStore", certificatesTrustStorePath);
             System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
@@ -175,7 +175,7 @@ public class Helper {
      */
     public static void loginFairExchange(String sosURL, String urlDashBoard, String userName, String password, boolean isRaise) throws Exception {
         String java_home = System.getenv("JAVA_HOME");
-        if (java_home.contains("Java")) {
+        if (java_home.contains("jdk")) {
             String certificatesTrustStorePath = String.format("%s\\jre\\lib\\security\\cacerts", java_home);
             System.setProperty("javax.net.ssl.trustStore", certificatesTrustStorePath);
            System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
@@ -230,7 +230,7 @@ public class Helper {
 
     public static boolean loginAgentIgnoreCaptchaTest(String sosURL, String sosValidationURL, String dashBoardURL, String userName, String password, String securityCode) throws Exception {
         String java_home = System.getenv("JAVA_HOME");
-        if (java_home.contains("Java")) {
+        if (java_home.contains("jdk")) {
             String certificatesTrustStorePath = String.format("%s\\jre\\lib\\security\\cacerts", java_home);
             System.setProperty("javax.net.ssl.trustStore", certificatesTrustStorePath);
             System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
@@ -302,7 +302,7 @@ public class Helper {
 
     public static boolean loginAgentIgnoreCaptchaTest(String sosURL, String loginURL, String userName, String password) throws Exception {
         String java_home = System.getenv("JAVA_HOME");
-        if (java_home.contains("Java")) {
+        if (java_home.contains("jdk")) {
             String certificatesTrustStorePath = String.format("%s\\jre\\lib\\security\\cacerts", java_home);
             System.setProperty("javax.net.ssl.trustStore", certificatesTrustStorePath);
             System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
