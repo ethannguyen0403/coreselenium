@@ -56,6 +56,12 @@
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
             <version>9.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-remote-driver</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.saucelabs</groupId>
