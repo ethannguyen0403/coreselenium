@@ -55,6 +55,7 @@ public class DesktopChromeDriver extends Driver {
 			System.out.println("DEBUG: Proxy Port is " + proxy.getPort());
 		} else if (properties.getRemoteURL() == null || properties.getRemoteURL().equals("")) {
 			System.out.println("remote");
+			options.setExperimentalOption("prefs",chromePrefs);
 			System.setProperty("webdriver.chrome.driver", properties.getExecutablePath());
 			System.setProperty("webdriver.http.factory", "jdk-http-client");
 			System.setProperty("webdriver.chrome.logfile", "chromedriverlogs.log");
