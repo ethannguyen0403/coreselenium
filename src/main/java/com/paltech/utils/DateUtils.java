@@ -442,6 +442,13 @@ public class DateUtils {
         }
         return lastDayMonth;
     }
+
+    public static String getNextOrPreviousMonth(int month, String pattern) {
+        Calendar cal  = Calendar.getInstance();
+        cal.add(Calendar.MONTH, month);
+        SimpleDateFormat s = new SimpleDateFormat(pattern);
+        return s.format(new Date(cal.getTimeInMillis()));
+    }
 ///////////////////
 
     ////////////////
