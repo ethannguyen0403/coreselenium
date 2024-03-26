@@ -205,6 +205,14 @@ public class Helper {
             }
             List<Cookie> lstPOSTCookies = h.getCookies(responsePost);
 
+            //2.2 skip change password if cannot login cause pwd updated or expired then re-login
+            if(lstPOSTCookies.size() == 1) {
+                String skipPasswordURL = String.format("%s/member-service/user/skip-change-password?username=%s", sosURL.split("/member-service")[0], userName);
+                WSUtils.sendPOSTRequestWithCookies(skipPasswordURL, Configs.HEADER_JSON, "", DriverManager.getDriver().getCookies().toString(), Configs.HEADER_JSON);
+                responsePost = h.sendGetRequest(sosURL, Configs.HEADER_FORM_URLENCODED, cookieStore,Configs.HEADER_JSON);
+                lstPOSTCookies = h.getCookies(responsePost);
+            }
+
             // 3. passing POST's cookies to browser's cookies
             if (isRaise && lstPOSTCookies.size() < 1) {
                 throw new Exception(String.format("Exception: Can't get SID and MESESSION cookies when using '%s' and '%s'", userName, password));
