@@ -31,10 +31,7 @@ public class DesktopChromeDriver extends Driver {
 		System.out.println(String.format("Picking up ChromeDriver at %s", properties.getExecutablePath()));
 
 		ChromeOptions options = new ChromeOptions();
-		//add log for debugging
-		LoggingPreferences logPrefs = new LoggingPreferences();
-		logPrefs.enable(LogType.BROWSER, Level.ALL);
-		options.setCapability(options.LOGGING_PREFS, logPrefs);
+
 		//options = configureChromeOptions();
 
 		//For setting download directory
