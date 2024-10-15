@@ -198,7 +198,7 @@ public class Helper {
 
             // 2. passing web-driver's cookies to POST's session, send this POST request, and then get POST's cookies
             sosURL = String.format("%s?loginId=%s&password=%s", sosURL, userName, passwordDecrypt);
-            HttpResponse responsePost = h.sendGetRequest(sosURL, Configs.HEADER_FORM_URLENCODED, cookieStore,Configs.HEADER_JSON);
+            HttpResponse responsePost = h.sendPostRequest(sosURL, Configs.HEADER_FORM_URLENCODED, cookieStore,Configs.HEADER_JSON);
           //  HttpResponse responsePost = h.sendPostRequest(sosURL, Configs.HEADER_FORM_URLENCODED, cookieStore,Configs.HEADER_JSON);
             if (responsePost == null && isRaise){
                 throw new Exception("Exception: Unauthorized occurs at Login page because responsePost is null");
