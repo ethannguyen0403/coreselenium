@@ -198,12 +198,20 @@ public class Helper {
 
             // 2. passing web-driver's cookies to POST's session, send this POST request, and then get POST's cookies
             sosURL = String.format("%s?loginId=%s&password=%s", sosURL, userName, passwordDecrypt);
-            HttpResponse responsePost = h.sendGetRequest(sosURL, Configs.HEADER_FORM_URLENCODED, cookieStore,Configs.HEADER_JSON);
+            HttpResponse responsePost = h.sendPostRequest(sosURL, Configs.HEADER_FORM_URLENCODED, cookieStore,Configs.HEADER_JSON);
           //  HttpResponse responsePost = h.sendPostRequest(sosURL, Configs.HEADER_FORM_URLENCODED, cookieStore,Configs.HEADER_JSON);
             if (responsePost == null && isRaise){
                 throw new Exception("Exception: Unauthorized occurs at Login page because responsePost is null");
             }
             List<Cookie> lstPOSTCookies = h.getCookies(responsePost);
+
+            //2.2 skip change password if cannot login cause pwd updated or expired then re-login
+            if(lstPOSTCookies.size() <= 2) {
+                String skipPasswordURL = String.format("%s/member-service/user/skip-change-password?username=%s", sosURL.split("/member-service")[0], userName);
+                WSUtils.sendPOSTRequestWithCookies(skipPasswordURL, Configs.HEADER_JSON, "", DriverManager.getDriver().getCookies().toString(), Configs.HEADER_JSON);
+                responsePost = h.sendGetRequest(sosURL, Configs.HEADER_FORM_URLENCODED, cookieStore,Configs.HEADER_JSON);
+                lstPOSTCookies = h.getCookies(responsePost);
+            }
 
             // 3. passing POST's cookies to browser's cookies
             if (isRaise && lstPOSTCookies.size() < 1) {
