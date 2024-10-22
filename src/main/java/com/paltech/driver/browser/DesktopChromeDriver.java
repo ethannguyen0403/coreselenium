@@ -50,6 +50,10 @@ public class DesktopChromeDriver extends Driver {
 			// creating a selenium proxy
 			Proxy seleniumProxy = getSeleniumProxy(proxy);
 			options.setCapability(CapabilityType.PROXY, seleniumProxy);
+
+			// Add argument to bypass WebSocket traffic
+			options.addArguments("--proxy-bypass-list=ws://*,wss://*");
+
 //			options.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
 			options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
 			options.setExperimentalOption("prefs",chromePrefs);
