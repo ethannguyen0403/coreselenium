@@ -443,15 +443,6 @@ public class DateUtils {
         return lastDayMonth;
     }
 
-    public static String getNextOrPreviousMonth(int month, String pattern) {
-        Calendar cal  = Calendar.getInstance();
-        cal.add(Calendar.MONTH, month);
-        SimpleDateFormat s = new SimpleDateFormat(pattern);
-        return s.format(new Date(cal.getTimeInMillis()));
-    }
-///////////////////
-
-    ////////////////
     public static void main(String[] args) throws ParseException {
       //  System.out.println(DateUtils.getPreviousDate("1/1/2019","dd/MM/yyyy"));
 //        System.out.println(DateUtils.getDateBeforeCurrentDate(0, "GMT-7", "dd/MM/yyyy"));
